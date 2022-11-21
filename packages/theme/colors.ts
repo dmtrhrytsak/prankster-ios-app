@@ -1,7 +1,6 @@
 import { palette } from './palette';
 
 export const colors = {
-  header: palette.white,
   background: palette.white,
   tabBar: palette.white,
   divider: palette.gray.light,

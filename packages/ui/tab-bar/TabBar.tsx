@@ -6,19 +6,18 @@ import type {
 import type { Route } from '@react-navigation/native';
 
 import { useTheme } from '../../theme/ThemeContext';
-import { TabBarIcons } from '../../navigation/types';
 
 import TodayIcon from '../../../assets/icons/Today.svg';
 import HistoryIcon from '../../../assets/icons/History.svg';
 import { Divider } from '../divider/Divider';
 
-const tabBarIcons: TabBarIcons = {
+const tabBarIcons = {
   Today: TodayIcon,
   History: HistoryIcon,
 };
 
 const renderIcon = (route: Route<string>, color: string) => {
-  const Icon = tabBarIcons[route.name as keyof TabBarIcons];
+  const Icon = tabBarIcons[route.name as keyof typeof tabBarIcons];
   return <Icon stroke={color} strokeWidth={2} style={{ marginBottom: 4 }} />;
 };
 

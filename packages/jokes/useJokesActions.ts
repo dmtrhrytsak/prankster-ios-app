@@ -6,6 +6,7 @@ import { JokesActions } from './JokesActions';
 import { JokesStorage } from './JokesStorage';
 import { JokesAPI } from './JokesAPI';
 import { JokesUtils } from './JokesUtils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const useJokesActions = () => {
   const { dispatch } = useJokes();

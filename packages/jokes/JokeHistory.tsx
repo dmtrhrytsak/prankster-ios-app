@@ -1,4 +1,4 @@
-import { FlatList, SafeAreaView } from 'react-native';
+import { FlatList, View } from 'react-native';
 
 import { Divider } from '../ui/divider/Divider';
 import type { Joke } from './types';
@@ -15,16 +15,15 @@ export const JokeHistory = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <FlatList
         data={jokes.ids}
         keyExtractor={(jokeId) => String(jokeId)}
         ItemSeparatorComponent={() => <Divider />}
-        ListFooterComponent={() => <Divider />}
         renderItem={({ item: jokeId }) => (
           <JokeItem jokeId={jokeId} onFavPress={handleFavPress} />
         )}
       />
-    </SafeAreaView>
+    </View>
   );
 };

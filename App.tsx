@@ -1,7 +1,7 @@
 import { JokesProvider } from './packages/jokes/JokesContext';
 import { ThemeProvider } from './packages/theme/ThemeContext';
 import { theme } from './packages/theme/theme';
-import { RootNavigator } from './packages/navigation/RootNavigator';
+import { RootStack } from './packages/navigation/RootStack';
 import { Wire } from './Wire';
 
 export default function App() {
@@ -9,7 +9,7 @@ export default function App() {
     <JokesProvider>
       <ThemeProvider value={{ theme }}>
         <Wire>
-          <RootNavigator />
+          <RootStack />
         </Wire>
       </ThemeProvider>
     </JokesProvider>

@@ -1,5 +1,4 @@
-export type ContainerProps = {
-  full?: boolean;
-  center?: boolean;
-  verticalCenter?: boolean;
-};
+import { ComponentProps } from 'react';
+import { View } from 'react-native';
+
+export type ContainerProps = {} & ComponentProps<typeof View>;

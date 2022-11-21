@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 import {
   useFonts,
   Inter_500Medium,
@@ -7,7 +7,6 @@ import {
   Inter_700Bold,
 } from '@expo-google-fonts/inter';
 
-import { Center } from './packages/ui/center/Center';
 import { Body } from './packages/ui/typography/Body';
 import { useJokesActions } from './packages/jokes/useJokesActions';
 
@@ -41,25 +40,25 @@ export const Wire = ({ children }: { children: React.ReactNode }) => {
 
   if (loadFontsError) {
     return (
-      <Center>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Body>We couldn't load the fonts :(</Body>
-      </Center>
+      </View>
     );
   }
 
   if (loadJokesFailed) {
     return (
-      <Center>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Body>Jokes take a day off! We're sorry.</Body>
-      </Center>
+      </View>
     );
   }
 
   if (!fontsLoaded || !jokesLoaded) {
     return (
-      <Center>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <ActivityIndicator />
-      </Center>
+      </View>
     );
   }
 

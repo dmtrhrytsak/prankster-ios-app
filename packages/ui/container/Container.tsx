@@ -5,18 +5,9 @@ import { ContainerProps } from './types';
 
 export const Container = ({
   children,
-  full = true,
-  center = false,
+  style,
 }: PropsWithChildren<ContainerProps>) => {
   return (
-    <View
-      style={{
-        paddingHorizontal: 24,
-        flex: full ? 1 : 0,
-        ...(center && { alignItems: 'center', justifyContent: 'center' }),
-      }}
-    >
-      {children}
-    </View>
+    <View style={[style, { flex: 1, paddingHorizontal: 24 }]}>{children}</View>
   );
 };
