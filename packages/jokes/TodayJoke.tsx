@@ -1,43 +1,48 @@
 import { View, ActivityIndicator } from 'react-native';
 
-import { Body } from '../ui/typography/Body';
 import { Icon } from '../ui/icon/Icon';
+import { Center } from '../ui/center/Center';
 import { IconButton } from '../ui/buttons/IconButton';
+import { useTodayJoke } from './useTodayJoke';
+import { Body } from '../ui/typography/Body';
 import { JokesUtils } from './JokesUtils';
-import { useJokes } from './JokesContext';
 import { useJokesActions } from './useJokesActions';
 
 export const TodayJoke = () => {
-  const {
-    state: { loading, error, jokes, todayJokeId },
-  } = useJokes();
+  const { loading, error, todayJoke } = useTodayJoke();
   const { likeJoke } = useJokesActions();
 
-  const todayJoke = jokes.entities[todayJokeId];
-
-  if (loading) {
-    return <ActivityIndicator />;
-  }
-
   if (error) {
-    return <Body>Something went wrong</Body>;
+    return (
+      <Center>
+        <Body>Something went wrong</Body>
+      </Center>
+    );
   }
 
-  if (!todayJoke) {
-    return null;
+  if (loading || !todayJoke) {
+    return (
+      <Center>
+        <ActivityIndicator />
+      </Center>
+    );
   }
 
   return (
-    <View>
-      <Body size="lg" style={{ marginBottom: 16 }}>
-        {JokesUtils.makeJokeText(todayJoke)}
-      </Body>
-      <IconButton
-        size="lg"
-        active={todayJoke.liked}
-        icon={(props) => <Icon name="Fav" {...props} />}
-        onPress={() => likeJoke(todayJokeId)}
-      />
-    </View>
+    <Center>
+      <View style={{ padding: 24 }}>
+        <View>
+          <Body size="lg" style={{ marginBottom: 16 }}>
+            {JokesUtils.makeJokeText(todayJoke)}
+          </Body>
+          <IconButton
+            size="lg"
+            active={todayJoke.liked}
+            icon={(props) => <Icon name="Fav" {...props} />}
+            onPress={() => likeJoke(todayJoke.id)}
+          />
+        </View>
+      </View>
+    </Center>
   );
 };
