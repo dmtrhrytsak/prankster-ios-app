@@ -1,32 +1,20 @@
-import { View, ActivityIndicator } from 'react-native';
+import { View } from 'react-native';
 
 import { Icon } from '../ui/icon/Icon';
 import { Center } from '../ui/center/Center';
 import { IconButton } from '../ui/buttons/IconButton';
-import { useTodayJoke } from './useTodayJoke';
 import { Body } from '../ui/typography/Body';
 import { JokesUtils } from './JokesUtils';
 import { useJokesActions } from './useJokesActions';
+import { useJokes } from './JokesContext';
 
 export const TodayJoke = () => {
-  const { loading, error, todayJoke } = useTodayJoke();
+  const {
+    state: { jokes, todayJokeId },
+  } = useJokes();
   const { likeJoke } = useJokesActions();
 
-  if (error) {
-    return (
-      <Center>
-        <Body>Something went wrong</Body>
-      </Center>
-    );
-  }
-
-  if (loading || !todayJoke) {
-    return (
-      <Center>
-        <ActivityIndicator />
-      </Center>
-    );
-  }
+  const todayJoke = jokes.entities[todayJokeId];
 
   return (
     <Center>
