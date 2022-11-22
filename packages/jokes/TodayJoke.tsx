@@ -1,20 +1,37 @@
-import { View } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 
 import { Icon } from '../ui/icon/Icon';
 import { IconButton } from '../ui/buttons/IconButton';
 import { Body } from '../ui/typography/Body';
-import { JokesUtils } from './JokesUtils';
-import { useJokesActions } from './useJokesActions';
-import { useJokes } from './JokesContext';
 import { Container } from '../ui/container/Container';
+import { Center } from '../ui/center/Center';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { JokeActions } from './JokeActions';
+import { JokesUtils } from './JokesUtils';
+import { JokesSelector } from './JokesSelector';
 
 export const TodayJoke = () => {
-  const {
-    state: { jokes, todayJokeId },
-  } = useJokes();
-  const { likeJoke } = useJokesActions();
+  const todayJoke = useAppSelector(JokesSelector.selectTodayJoke);
+  const loading = useAppSelector(JokesSelector.selectLoading);
+  const error = useAppSelector(JokesSelector.selectError);
 
-  const todayJoke = jokes.entities[todayJokeId];
+  const dispatch = useAppDispatch();
+
+  if (error) {
+    return (
+      <Center>
+        <Body>Sorry, but today's joke takes a break :(</Body>
+      </Center>
+    );
+  }
+
+  if (loading || !todayJoke) {
+    return (
+      <Center>
+        <ActivityIndicator />
+      </Center>
+    );
+  }
 
   return (
     <Container>
@@ -27,7 +44,9 @@ export const TodayJoke = () => {
             size="lg"
             active={todayJoke.liked}
             icon={(props) => <Icon name="Fav" {...props} />}
-            onPress={() => likeJoke(todayJoke.id)}
+            onPress={() =>
+              dispatch(JokeActions.likeJokeRequested(todayJoke.id))
+            }
           />
         </View>
       </View>

@@ -8,57 +8,40 @@ import {
 } from '@expo-google-fonts/inter';
 
 import { Body } from './packages/ui/typography/Body';
-import { useJokesActions } from './packages/jokes/useJokesActions';
+import { Center } from './packages/ui/center/Center';
+import { useAppDispatch } from './packages/store/hooks';
+import { JokeActions } from './packages/jokes/JokeActions';
 
 // Feels like I'm improvising here, but why not?
 // It will ensure the best performance and the best user experience.
 // I might be wrong, but I like to innovate :D Especially when it's just a test task.
 export const Wire = ({ children }: { children: React.ReactNode }) => {
-  const [jokesLoaded, setJokesLoaded] = useState(false);
-  const [loadJokesFailed, setLoadJokesFailed] = useState(false);
-  const { getTodayJoke, getJokeHistory } = useJokesActions();
-
   const [fontsLoaded, loadFontsError] = useFonts({
     Inter_500Medium,
     Inter_600SemiBold,
     Inter_700Bold,
   });
 
-  useEffect(() => {
-    const fetchJokes = async () => {
-      try {
-        await getTodayJoke();
-        await getJokeHistory();
-        setJokesLoaded(true);
-      } catch (err) {
-        setLoadJokesFailed(true);
-      }
-    };
+  const dispatch = useAppDispatch();
 
-    fetchJokes();
+  useEffect(() => {
+    dispatch(JokeActions.getJokeHistoryRequested());
+    dispatch(JokeActions.getTodayJokeRequested());
   }, []);
 
   if (loadFontsError) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Center>
         <Body>We couldn't load the fonts :(</Body>
-      </View>
+      </Center>
     );
   }
 
-  if (loadJokesFailed) {
+  if (!fontsLoaded) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Body>Jokes take a day off! We're sorry.</Body>
-      </View>
-    );
-  }
-
-  if (!fontsLoaded || !jokesLoaded) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Center>
         <ActivityIndicator />
-      </View>
+      </Center>
     );
   }
 

@@ -1,4 +1,4 @@
-import { JokesActions } from './JokesActions';
+import { JokeActions } from './JokeActions';
 
 export type Joke = {
   id: number;
@@ -11,8 +11,8 @@ export type Joke = {
 };
 
 export type JokeItemProps = {
-  jokeId: Joke['id'];
-  onFavPress: (jokeId: Joke['id']) => void;
+  joke: Joke;
+  onFavPress: () => void;
 };
 
 export type JokesState = {
@@ -30,7 +30,7 @@ export type JokesContextType = {
 };
 
 export type JokesAction = ReturnType<
-  typeof JokesActions[keyof typeof JokesActions]
+  typeof JokeActions[keyof typeof JokeActions]
 >;
 
 export type GetJokeHistorySucceededPayload = Joke[];
@@ -41,5 +41,6 @@ export type JokeHistoryChangedPayload = Joke[];
 export type GetTodayJokeSucceededPayload = Joke;
 export type GetTodayJokeFailedPayload = Error;
 
+export type LikeJokeRequestedPayload = Joke['id'];
 export type LikeJokeSucceededPayload = Joke['id'];
 export type LikeJokeFailedPayload = Error;

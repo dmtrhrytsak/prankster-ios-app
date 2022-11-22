@@ -4,16 +4,12 @@ import { Body } from '../ui/typography/Body';
 import { IconButton } from '../ui/buttons/IconButton';
 import { Icon } from '../ui/icon/Icon';
 import type { JokeItemProps } from './types';
-import { useJokes } from './JokesContext';
 import { JokesUtils } from './JokesUtils';
+import { Divider } from '../ui/divider/Divider';
 
-export const JokeItem = ({ jokeId, onFavPress }: JokeItemProps) => {
-  const {
-    state: { jokes },
-  } = useJokes();
-
-  const joke = jokes.entities[jokeId];
-
+// I figured out too late that it probably should have been a generic ListItem
+// Still learning app development...
+export const JokeItem = ({ joke, onFavPress }: JokeItemProps) => {
   return (
     <View
       style={{
@@ -27,8 +23,9 @@ export const JokeItem = ({ jokeId, onFavPress }: JokeItemProps) => {
         active={joke.liked}
         icon={(props) => <Icon name="Fav" {...props} />}
         style={{ marginLeft: 20 }}
-        onPress={() => onFavPress(jokeId)}
+        onPress={onFavPress}
       />
+      <Divider />
     </View>
   );
 };
